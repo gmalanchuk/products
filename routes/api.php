@@ -1,6 +1,4 @@
 <?php
 
-use App\Http\Controllers\ProductController;
-use Illuminate\Support\Facades\Route;
-
-Route::apiResource('products', ProductController::class);
+require __DIR__ . '/groups/auth.php';
+require __DIR__ . '/groups/products.php';
