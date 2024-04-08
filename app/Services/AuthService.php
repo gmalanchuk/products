@@ -9,7 +9,7 @@ class AuthService
 {
     private array $data;
 
-    public function register(): string
+    public function register(): User | string
     {
         $user = new User([
             'name' => $this->data['name'],
@@ -18,16 +18,16 @@ class AuthService
         ]);
 
         if (!$user->save()) {
-            return response()->json(['error' => 'Provide proper details'], 400);
+            return response()->json(['error' => 'Provide proper details'], 400);  // TODO maybe make an exception
         }
 
         $tokenResult = $user->createToken('Personal Access Token');
-        $token = $tokenResult->plainTextToken;
+        $user->token = $tokenResult->plainTextToken;
 
-        return $token;
+        return $user;
     }
 
-    public function login(): string
+    public function login(): User | string
     {
         if (!Auth::attempt($this->data)) {
             return response()->json([
@@ -37,9 +37,9 @@ class AuthService
 
         $user = Auth::user();
         $tokenResult = $user->createToken('Personal Access Token');
-        $token = $tokenResult->plainTextToken;
+        $user->token = $tokenResult->plainTextToken;
 
-        return $token;
+        return $user;
     }
 
     public function setData(array $data): AuthService

@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 use App\Facades\AuthFacade;
 use App\Http\Requests\Auth\LoginAuthRequest;
 use App\Http\Requests\Auth\RegisterAuthRequest;
+use App\Http\Resources\Auth\TokenResource;
+use App\Http\Resources\Auth\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -21,22 +23,18 @@ class AuthController extends Controller implements HasMiddleware
 
     public function register(RegisterAuthRequest $request)
     {
-        $token = AuthFacade::setData($request->validated())->register();
-
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-        ], 201);  // TODO maybe make a resource
+        $user = AuthFacade::setData($request->validated())->register();
+        return (new UserResource($user))->additional([
+            'token' => new TokenResource($user),
+        ]);
     }
 
     public function login(LoginAuthRequest $request)
     {
-        $token = AuthFacade::setData($request->validated())->login();
-
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-        ]);  // TODO maybe make a resource
+        $user = AuthFacade::setData($request->validated())->login();
+        return (new UserResource($user))->additional([
+            'token' => new TokenResource($user),
+        ]);
     }
 
     public function logout(Request $request)

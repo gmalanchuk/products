@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Http\Resources\Auth\TokenResource;
+use App\Http\Resources\Auth\UserResource;
 use App\Http\Resources\Product\ProductResource;
 use App\Models\Product;
 use App\Policies\ProductPolicy;
@@ -29,5 +31,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Product::class, ProductPolicy::class);
 
         ProductResource::withoutWrapping();
+        UserResource::withoutWrapping();
+        TokenResource::withoutWrapping();
     }
 }
