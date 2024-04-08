@@ -41,6 +41,6 @@ class AuthController extends Controller implements HasMiddleware
     {
         $request->user()->tokens()->delete();
 
-        return response()->json([], 204);
+        return response()->noContent();
     }
 }

@@ -12,6 +12,12 @@ class ProductService
         return $product;
     }
 
+    public function updateProduct($product)
+    {
+        $product->update($this->data);
+        return $product;
+    }
+
     public function setData(array $data): ProductService
     {
         $this->data = $data;

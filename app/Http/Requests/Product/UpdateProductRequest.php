@@ -9,9 +9,9 @@ class UpdateProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'min:10'],
-            'article' => ['required', 'regex:/^[a-zA-Z0-9]+$/', 'unique:products'],
-            'status' => ['required', 'in:available,unavailable'],
+            'name' => ['nullable', 'string', 'min:10'],
+            'article' => ['nullable', 'regex:/^[a-zA-Z0-9]+$/', 'unique:products'],
+            'status' => ['nullable', 'in:available,unavailable'],
         ];
     }
 }
