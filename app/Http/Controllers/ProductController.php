@@ -34,9 +34,7 @@ class ProductController extends Controller implements HasMiddleware
 
     public function show(Product $product)
     {
-        // TODO сделать проверку: пользователь админ - отдаём любой продукт, даже который не доступен
-        // если пользователь не аутентифицирован или не является админом - отдаём только доступные продукты, иначе 404
-        // TODO сделать политику
+        Gate::authorize('view', $product);  // Check if the user can view the product (only the owner or admin can view the unavailable product)
         return new ProductResource($product);  // Return the product
     }
 

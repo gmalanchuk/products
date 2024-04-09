@@ -9,6 +9,15 @@ use Illuminate\Auth\Access\Response;
 
 class ProductPolicy
 {
+//    public function before(User $user, string $ability): bool|null
+
+    public function view(?User $user, Product $product): bool | Response
+    {
+        return $user?->role === 'admin' || $product->is_available || $user?->id === $product->user_id
+            ? Response::allow()
+            : Response::deny('Insufficient rights to view this product');
+    }
+
     public function update(User $user, Product $product): bool | Response
     {
         if ($user->role === 'admin') {

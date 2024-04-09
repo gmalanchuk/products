@@ -29,7 +29,7 @@ class AuthService
 
     public function login(): User | string
     {
-        if (!Auth::attempt($this->data)) {
+        if (!Auth::guard('web')->attempt($this->data)) {
             return response()->json([
                 'message' => 'Invalid password or email'
             ], 401);
