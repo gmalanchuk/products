@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Exceptions\InvalidDetailsException;
+use App\Exceptions\InvalidLoginException;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -9,6 +11,9 @@ class AuthService
 {
     private array $data;
 
+    /**
+     * @throws InvalidDetailsException
+     */
     public function register(): User | string
     {
         $user = new User([
@@ -18,7 +23,7 @@ class AuthService
         ]);
 
         if (!$user->save()) {
-            return response()->json(['error' => 'Provide proper details'], 400);  // TODO maybe make an exception
+            throw new InvalidDetailsException();
         }
 
         $tokenResult = $user->createToken('Personal Access Token');
@@ -27,13 +32,14 @@ class AuthService
         return $user;
     }
 
+    /**
+     * @throws InvalidLoginException
+     */
     public function login(): User | string
     {
         if (!Auth::guard('web')->attempt($this->data)) {
-            return response()->json([
-                'message' => 'Invalid password or email'
-            ], 401);
-        }  // TODO maybe make an exception
+            throw new InvalidLoginException();
+        }
 
         $user = Auth::user();
         $tokenResult = $user->createToken('Personal Access Token');
