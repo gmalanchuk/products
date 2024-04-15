@@ -2,13 +2,19 @@
 
 namespace App\Services;
 
+use App\Jobs\ProductCreatedJob;
+
 class ProductService
 {
     private array $data;
 
     public function createProduct()
     {
-        $product = auth()->user()->products()->create($this->data);
+        $user = auth()->user();
+        $product = $user->products()->create($this->data);
+
+        ProductCreatedJob::dispatch($product, $user);
+
         return $product;
     }
 
