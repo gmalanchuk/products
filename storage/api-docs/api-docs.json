@@ -1,0 +1,84 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Products API",
+        "description": "API for products management",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/register": {
+            "post": {
+                "operationId": "0903f2e0df1a8857bee538fc055417f0",
+                "responses": {
+                    "201": {
+                        "description": "Return created user data and token"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "operationId": "2dd578ff7aba2721293dac66833b27d1",
+                "responses": {
+                    "200": {
+                        "description": "Return user data and token"
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "post": {
+                "operationId": "68a6108af04af5e3bc1ea68a6c6f1299",
+                "responses": {
+                    "204": {
+                        "description": "No content"
+                    }
+                }
+            }
+        },
+        "/products": {
+            "get": {
+                "operationId": "c1ff6f862214e1896c59cfe0491ce0e8",
+                "responses": {
+                    "200": {
+                        "description": "Return collection of products"
+                    }
+                }
+            },
+            "post": {
+                "operationId": "399770d33fa4672f1216707d0e236763",
+                "responses": {
+                    "201": {
+                        "description": "Return created product"
+                    }
+                }
+            }
+        },
+        "/products/{id}": {
+            "get": {
+                "operationId": "b46f4aa73232d0368eee698a082342a4",
+                "responses": {
+                    "200": {
+                        "description": "Return product by id"
+                    }
+                }
+            },
+            "put": {
+                "operationId": "1419d479f9340e30e67fe21a2ca525b7",
+                "responses": {
+                    "200": {
+                        "description": "Return updated product"
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "fe34b364a3f192305598b65d04d06b5d",
+                "responses": {
+                    "204": {
+                        "description": "No content"
+                    }
+                }
+            }
+        }
+    }
+}

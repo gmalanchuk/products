@@ -21,6 +21,12 @@ class AuthController extends Controller implements HasMiddleware
         ];
     }
 
+    /**
+     * @OA\Post(
+     *     path="/register",
+     *     @OA\Response(response="201", description="Return created user data and token")
+     * )
+     */
     public function register(RegisterAuthRequest $request)
     {
         $user = AuthFacade::setData($request->validated())->register();
@@ -29,6 +35,12 @@ class AuthController extends Controller implements HasMiddleware
         ]);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/login",
+     *     @OA\Response(response="200", description="Return user data and token")
+     * )
+     */
     public function login(LoginAuthRequest $request)
     {
         $user = AuthFacade::setData($request->validated())->login();
@@ -37,6 +49,12 @@ class AuthController extends Controller implements HasMiddleware
         ]);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/logout",
+     *     @OA\Response(response="204", description="No content")
+     * )
+     */
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();

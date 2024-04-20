@@ -11,6 +11,13 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Gate;
 
+/**
+ * @OA\Info(
+ *      version="1.0.0",
+ *      title="Products API",
+ *      description="API for products management",
+ * )
+ */
 class ProductController extends Controller implements HasMiddleware
 {
     public static function middleware(): array
@@ -20,24 +27,48 @@ class ProductController extends Controller implements HasMiddleware
         ];
     }
 
+    /**
+     * @OA\Get(
+     *     path="/products",
+     *     @OA\Response(response="200", description="Return collection of products")
+     * )
+     */
     public function index()
     {
         $products = Product::scopeAvailable(Product::all());  // Get all available products
         return ProductResource::collection($products);  // Return collection of products
     }
 
+    /**
+     * @OA\Post(
+     *     path="/products",
+     *     @OA\Response(response="201", description="Return created product")
+     * )
+     */
     public function store(StoreProductRequest $request)
     {
         $product = ProductFacade::setData($request->validated())->createProduct();  // Creating a new product in the ProductService class
         return new ProductResource($product);  // Return the created product
     }
 
+    /**
+     * @OA\Get(
+     *     path="/products/{id}",
+     *     @OA\Response(response="200", description="Return product by id")
+     * )
+     */
     public function show(Product $product)
     {
         Gate::authorize('view', $product);  // Check if the user can view the product (only the owner or admin can view the unavailable product)
         return new ProductResource($product);  // Return the product
     }
 
+    /**
+     * @OA\Put(
+     *     path="/products/{id}",
+     *     @OA\Response(response="200", description="Return updated product")
+     * )
+     */
     public function update(UpdateProductRequest $request, Product $product)
     {
         Gate::authorize('update', $product);  // Check if the user can update the product (only the owner or admin can update the product)
@@ -45,6 +76,12 @@ class ProductController extends Controller implements HasMiddleware
         return new ProductResource($product);  // Return the updated product
     }
 
+    /**
+     * @OA\Delete(
+     *     path="/products/{id}",
+     *     @OA\Response(response="204", description="No content")
+     * )
+     */
     public function destroy(string $id)
     {
         $product = Product::findOrFail($id);
