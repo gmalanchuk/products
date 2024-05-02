@@ -23,7 +23,8 @@ class AuthController extends Controller implements HasMiddleware
 
     /**
      * @OA\Post(
-     *     path="/register",
+     *     path="/api/register",
+     *     tags={"Authentication"},
      *     @OA\Response(response="201", description="Return created user data and token")
      * )
      */
@@ -37,7 +38,8 @@ class AuthController extends Controller implements HasMiddleware
 
     /**
      * @OA\Post(
-     *     path="/login",
+     *     path="/api/login",
+     *     tags={"Authentication"},
      *     @OA\Response(response="200", description="Return user data and token")
      * )
      */
@@ -51,7 +53,8 @@ class AuthController extends Controller implements HasMiddleware
 
     /**
      * @OA\Post(
-     *     path="/logout",
+     *     path="/api/logout",
+     *     tags={"Authentication"},
      *     @OA\Response(response="204", description="No content")
      * )
      */

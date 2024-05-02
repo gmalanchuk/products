@@ -29,7 +29,8 @@ class ProductController extends Controller implements HasMiddleware
 
     /**
      * @OA\Get(
-     *     path="/products",
+     *     path="/api/products",
+     *     tags={"Products"},
      *     @OA\Response(response="200", description="Return collection of products")
      * )
      */
@@ -41,7 +42,8 @@ class ProductController extends Controller implements HasMiddleware
 
     /**
      * @OA\Post(
-     *     path="/products",
+     *     path="/api/products",
+     *     tags={"Products"},
      *     @OA\Response(response="201", description="Return created product")
      * )
      */
@@ -53,7 +55,8 @@ class ProductController extends Controller implements HasMiddleware
 
     /**
      * @OA\Get(
-     *     path="/products/{id}",
+     *     path="/api/products/{id}",
+     *     tags={"Products"},
      *     @OA\Response(response="200", description="Return product by id")
      * )
      */
@@ -65,7 +68,8 @@ class ProductController extends Controller implements HasMiddleware
 
     /**
      * @OA\Put(
-     *     path="/products/{id}",
+     *     path="/api/products/{id}",
+     *     tags={"Products"},
      *     @OA\Response(response="200", description="Return updated product")
      * )
      */
@@ -78,7 +82,8 @@ class ProductController extends Controller implements HasMiddleware
 
     /**
      * @OA\Delete(
-     *     path="/products/{id}",
+     *     path="/api/products/{id}",
+     *     tags={"Products"},
      *     @OA\Response(response="204", description="No content")
      * )
      */

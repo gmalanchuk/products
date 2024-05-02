@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Jobs\ProductCreatedJob;
+use Illuminate\Support\Str;
 
 class ProductService
 {
@@ -11,6 +12,8 @@ class ProductService
     public function createProduct()
     {
         $user = auth()->user();
+
+        $this->data['article'] = Str::random(10);
         $product = $user->products()->create($this->data);
 
         ProductCreatedJob::dispatch($product, $user);

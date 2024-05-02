@@ -10,7 +10,6 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'min:10'],
-            'article' => ['required', 'regex:/^[a-zA-Z0-9]+$/', 'unique:products'],
             'status' => ['required', 'in:available,unavailable'],
         ];
     }

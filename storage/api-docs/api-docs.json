@@ -6,9 +6,12 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/register": {
+        "/api/register": {
             "post": {
-                "operationId": "0903f2e0df1a8857bee538fc055417f0",
+                "tags": [
+                    "Authentication"
+                ],
+                "operationId": "8a56853624e025573120a09a4c75d468",
                 "responses": {
                     "201": {
                         "description": "Return created user data and token"
@@ -16,9 +19,12 @@
                 }
             }
         },
-        "/login": {
+        "/api/login": {
             "post": {
-                "operationId": "2dd578ff7aba2721293dac66833b27d1",
+                "tags": [
+                    "Authentication"
+                ],
+                "operationId": "a3b306d14572d1f4bd6c064b3233e7b8",
                 "responses": {
                     "200": {
                         "description": "Return user data and token"
@@ -26,9 +32,12 @@
                 }
             }
         },
-        "/logout": {
+        "/api/logout": {
             "post": {
-                "operationId": "68a6108af04af5e3bc1ea68a6c6f1299",
+                "tags": [
+                    "Authentication"
+                ],
+                "operationId": "fe8f3429cd6979b3b4517e186505f9f9",
                 "responses": {
                     "204": {
                         "description": "No content"
@@ -36,9 +45,12 @@
                 }
             }
         },
-        "/products": {
+        "/api/products": {
             "get": {
-                "operationId": "c1ff6f862214e1896c59cfe0491ce0e8",
+                "tags": [
+                    "Products"
+                ],
+                "operationId": "1bfaa78d1c2c3848ab8165c5dadcad3e",
                 "responses": {
                     "200": {
                         "description": "Return collection of products"
@@ -46,7 +58,10 @@
                 }
             },
             "post": {
-                "operationId": "399770d33fa4672f1216707d0e236763",
+                "tags": [
+                    "Products"
+                ],
+                "operationId": "e8185e307706e2cd84bbcf5171e2f09d",
                 "responses": {
                     "201": {
                         "description": "Return created product"
@@ -54,9 +69,12 @@
                 }
             }
         },
-        "/products/{id}": {
+        "/api/products/{id}": {
             "get": {
-                "operationId": "b46f4aa73232d0368eee698a082342a4",
+                "tags": [
+                    "Products"
+                ],
+                "operationId": "7ab21ddb713501f3d4c2914892c02a21",
                 "responses": {
                     "200": {
                         "description": "Return product by id"
@@ -64,7 +82,10 @@
                 }
             },
             "put": {
-                "operationId": "1419d479f9340e30e67fe21a2ca525b7",
+                "tags": [
+                    "Products"
+                ],
+                "operationId": "6a7e11900844cd85cff66e662b82bd4c",
                 "responses": {
                     "200": {
                         "description": "Return updated product"
@@ -72,7 +93,10 @@
                 }
             },
             "delete": {
-                "operationId": "fe34b364a3f192305598b65d04d06b5d",
+                "tags": [
+                    "Products"
+                ],
+                "operationId": "e80a6ca46716acee6b47ea1ac91663c0",
                 "responses": {
                     "204": {
                         "description": "No content"

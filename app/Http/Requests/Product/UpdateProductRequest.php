@@ -10,7 +10,6 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'name' => ['nullable', 'string', 'min:10'],
-            'article' => ['nullable', 'regex:/^[a-zA-Z0-9]+$/', 'unique:products'],
             'status' => ['nullable', 'in:available,unavailable'],
         ];
     }
