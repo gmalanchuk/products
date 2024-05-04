@@ -3,16 +3,21 @@
 namespace App\Services;
 
 
+use App\Exceptions\EmailAlreadyVerifiedException;
+use App\Exceptions\InvalidOrExpiredUrlException;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class EmailService
 {
+    /**
+     * @throws InvalidOrExpiredUrlException
+     */
     public function verify($user_id, Request $request): JsonResponse
     {
         if (!$request->hasValidSignature()) {
-            return response()->json(['message' => 'Invalid or expired url provided'], 401);  // todo make an exception
+            throw new InvalidOrExpiredUrlException();
         }
 
         $user = User::findOrFail($user_id);
@@ -26,10 +31,13 @@ class EmailService
         ], 200);
     }
 
+    /**
+     * @throws EmailAlreadyVerifiedException
+     */
     public function resend(): JsonResponse
     {
         if (auth()->user()->hasVerifiedEmail()) {
-            return response()->json(["message" => "User email already verified"], 400); // todo make an exception
+            throw new EmailAlreadyVerifiedException();
         }
 
         auth()->user()->sendEmailVerificationNotification(); // todo make a job
