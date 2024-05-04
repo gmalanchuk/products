@@ -9,6 +9,8 @@ class InvalidDetailsException extends Exception
 {
     public function render($request): JsonResponse
     {
-        return response()->json(['error' => 'The details provided are invalids'], 400);
+        return response()->json([
+            'message' => 'The details provided are invalids'
+        ], 400);
     }
 }

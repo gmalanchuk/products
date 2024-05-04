@@ -8,6 +8,7 @@ use App\Http\Requests\Auth\LoginAuthRequest;
 use App\Http\Requests\Auth\RegisterAuthRequest;
 use App\Http\Resources\Auth\TokenResource;
 use App\Http\Resources\Auth\UserResource;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
@@ -31,6 +32,9 @@ class AuthController extends Controller implements HasMiddleware
     public function register(RegisterAuthRequest $request)
     {
         $user = AuthFacade::setData($request->validated())->register();
+
+        event(new Registered($user)); // TODO make a job
+
         return (new UserResource($user))->additional([
             'token' => new TokenResource($user),
         ]);
@@ -61,7 +65,6 @@ class AuthController extends Controller implements HasMiddleware
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
-
         return response()->noContent();
     }
 }
