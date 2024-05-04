@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 
+use App\Exceptions\InvalidDetailsException;
+use App\Exceptions\InvalidLoginException;
 use App\Facades\AuthFacade;
 use App\Http\Requests\Auth\LoginAuthRequest;
 use App\Http\Requests\Auth\RegisterAuthRequest;
@@ -10,6 +12,7 @@ use App\Http\Resources\Auth\TokenResource;
 use App\Http\Resources\Auth\UserResource;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
@@ -28,8 +31,9 @@ class AuthController extends Controller implements HasMiddleware
      *     tags={"Authentication"},
      *     @OA\Response(response="201", description="Return created user data and token")
      * )
+     * @throws InvalidDetailsException
      */
-    public function register(RegisterAuthRequest $request)
+    public function register(RegisterAuthRequest $request): UserResource
     {
         $user = AuthFacade::setData($request->validated())->register();
 
@@ -46,8 +50,9 @@ class AuthController extends Controller implements HasMiddleware
      *     tags={"Authentication"},
      *     @OA\Response(response="200", description="Return user data and token")
      * )
+     * @throws InvalidLoginException
      */
-    public function login(LoginAuthRequest $request)
+    public function login(LoginAuthRequest $request): UserResource
     {
         $user = AuthFacade::setData($request->validated())->login();
         return (new UserResource($user))->additional([
@@ -62,7 +67,7 @@ class AuthController extends Controller implements HasMiddleware
      *     @OA\Response(response="204", description="No content")
      * )
      */
-    public function logout(Request $request)
+    public function logout(Request $request): Response
     {
         $request->user()->tokens()->delete();
         return response()->noContent();
