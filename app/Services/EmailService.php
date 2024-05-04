@@ -1,23 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Services;
+
 
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 
-// todo make a service
-class EmailVerificationController extends Controller implements HasMiddleware
+class EmailService
 {
-    public static function middleware(): array
-    {
-        return [
-            new Middleware('auth:sanctum', only: ['resend']),
-        ];
-    }
-
     public function verify($user_id, Request $request): JsonResponse
     {
         if (!$request->hasValidSignature()) {
@@ -35,7 +26,8 @@ class EmailVerificationController extends Controller implements HasMiddleware
         ], 200);
     }
 
-    public function resend() {
+    public function resend(): JsonResponse
+    {
         if (auth()->user()->hasVerifiedEmail()) {
             return response()->json(["message" => "User email already verified"], 400); // todo make an exception
         }
