@@ -10,7 +10,7 @@ use App\Http\Requests\Auth\LoginAuthRequest;
 use App\Http\Requests\Auth\RegisterAuthRequest;
 use App\Http\Resources\Auth\TokenResource;
 use App\Http\Resources\Auth\UserResource;
-use Illuminate\Auth\Events\Registered;
+use App\Jobs\UserEmailVerificationJob;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -37,7 +37,7 @@ class AuthController extends Controller implements HasMiddleware
     {
         $user = AuthFacade::setData($request->validated())->register();
 
-        event(new Registered($user)); // TODO make a job
+        UserEmailVerificationJob::dispatch($user); // send email verification link
 
         return (new UserResource($user))->additional([
             'token' => new TokenResource($user),

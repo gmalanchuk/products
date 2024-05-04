@@ -5,6 +5,7 @@ namespace App\Services;
 
 use App\Exceptions\EmailAlreadyVerifiedException;
 use App\Exceptions\InvalidOrExpiredUrlException;
+use App\Jobs\UserEmailVerificationJob;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -40,7 +41,7 @@ class EmailService
             throw new EmailAlreadyVerifiedException();
         }
 
-        auth()->user()->sendEmailVerificationNotification(); // todo make a job
+        UserEmailVerificationJob::dispatch(auth()->user()); // send email verification link
 
         return response()->json([
             "message" => "Email verification link sent on your email id"
