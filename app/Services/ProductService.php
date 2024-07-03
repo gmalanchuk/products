@@ -38,6 +38,19 @@ class ProductService
 
     public function updateProduct($product)
     {
+        $images = Arr::get($this->data, 'images');
+
+        // todo S3 storage
+        if (!empty($images)) {
+            $product->images()->delete();
+            foreach ($images as $image) {
+                $path = $image->storePublicly('images');
+                $product->images()->create([
+                    'url' => config('app.url') . Storage::url($path),
+                ]);
+            }
+        }
+
         $product->update($this->data);
         return $product;
     }

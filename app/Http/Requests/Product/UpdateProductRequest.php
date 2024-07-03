@@ -11,7 +11,7 @@ class UpdateProductRequest extends FormRequest
         return [
             'name' => ['nullable', 'string', 'min:10'],
             'status' => ['nullable', 'in:available,unavailable'],
-            'images' => ['required', 'array', 'min:1', 'max:3'],
+            'images' => ['nullable', 'array', 'min:1', 'max:3'],
             'images.*' => ['image', 'mimes:jpg,jpeg,png'],
         ];
     }
