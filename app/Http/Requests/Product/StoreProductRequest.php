@@ -11,6 +11,8 @@ class StoreProductRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'min:10'],
             'status' => ['required', 'in:available,unavailable'],
+            'images' => ['required', 'array', 'min:1', 'max:3'],
+            'images.*' => ['image', 'mimes:jpg,jpeg,png'],
         ];
     }
 }
