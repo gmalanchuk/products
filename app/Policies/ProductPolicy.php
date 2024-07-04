@@ -9,8 +9,6 @@ use Illuminate\Auth\Access\Response;
 
 class ProductPolicy
 {
-//    public function before(User $user, string $ability): bool|null
-
     public function view(?User $user, Product $product): bool | Response
     {
         return $user?->role === 'admin' || $product->is_available || $user?->id === $product->user_id
