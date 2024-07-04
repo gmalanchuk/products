@@ -26,7 +26,7 @@ class ProductController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('auth:sanctum', only: ['store', 'update', 'destroy']),
-// todo            new Middleware('verified', only: ['store']), // Only users with verified email can create a product
+// TODO           new Middleware('verified', only: ['store']), // Only users with verified email can create a product
         ];
     }
 
@@ -40,7 +40,6 @@ class ProductController extends Controller implements HasMiddleware
     public function index(): AnonymousResourceCollection
     {
         $products = Product::scopeAvailable(Product::all());  // Get all available products
-        dd($products);
         return ProductResource::collection($products);  // Return collection of products
     }
 
@@ -66,6 +65,7 @@ class ProductController extends Controller implements HasMiddleware
      */
     public function show(Product $product): ProductResource
     {
+//        dd($product->status);
         Gate::authorize('view', $product);  // Check if the user can view the product (only the owner or admin can view the unavailable product)
         return new ProductResource($product);  // Return the product
     }

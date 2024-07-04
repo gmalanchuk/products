@@ -11,7 +11,7 @@ class ProductPolicy
 {
     public function view(?User $user, Product $product): bool | Response
     {
-        return $user?->role === 'admin' || $product->is_available || $user?->id === $product->user_id
+        return $user?->role === 'admin' || $product->status === 'available' || $user?->id === $product->user_id
             ? Response::allow()
             : Response::deny('Insufficient rights to view this product');
     }

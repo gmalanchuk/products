@@ -15,20 +15,27 @@ class ProductService
     {
         $user = auth()->user();
 
-        $images = Arr::get($this->data, 'images');
+        $images = $this->data['images'];
         unset($this->data['images']);
+
+        $categories = $this->data['categories'];
+        unset($this->data['categories']);
 
         $this->data['article'] = Str::random(8);
         $product = $user->products()->create($this->data);
 
         // todo S3 storage
-        if (!empty($images)) {
-            foreach ($images as $image) {
-                $path = $image->storePublicly('images');
-                $product->images()->create([
-                    'url' => config('app.url') . Storage::url($path),
-                ]);
-            }
+        foreach ($images as $image) {
+            $path = $image->storePublicly('images');
+            $product->images()->create([
+                'url' => config('app.url') . Storage::url($path),
+            ]);
+        }
+
+        foreach ($categories as $category) {
+            $product->categories()->firstOrCreate([
+                'name' => $category
+            ]);
         }
 
         ProductCreatedJob::dispatch($product, $user);

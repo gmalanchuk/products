@@ -11,3 +11,11 @@ test assignment: https://docs.google.com/document/d/1fl4eCKdpSXUNyu899NCKaDy_fdH
 php artisan l5-swagger:generate
 php artisan queue:work
 php artisan config:cache
+
+
+
++ получение всех продуктов
++ получение одного продукта
++ создание продукта
+обновление продукта
+удаление продукта
