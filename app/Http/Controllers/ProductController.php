@@ -26,7 +26,7 @@ class ProductController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('auth:sanctum', only: ['store', 'update', 'destroy']),
-// TODO           new Middleware('verified', only: ['store']), // Only users with verified email can create a product
+            new Middleware('verified', only: ['store']), // Only users with verified email can create a product
         ];
     }
 

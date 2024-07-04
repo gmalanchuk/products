@@ -13,6 +13,7 @@ class UpdateProductRequest extends FormRequest
             'status' => ['nullable', 'in:available,unavailable'],
             'images' => ['nullable', 'array', 'min:1', 'max:3'],
             'images.*' => ['image', 'mimes:jpg,jpeg,png'],
+            'categories' => ['nullable', 'array', 'min:1', 'max:3'],
         ];
     }
 }

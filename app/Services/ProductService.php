@@ -46,6 +46,7 @@ class ProductService
     public function updateProduct($product)
     {
         $images = Arr::get($this->data, 'images');
+        $categories = Arr::get($this->data, 'categories');
 
         // todo S3 storage
         if (!empty($images)) {
@@ -54,6 +55,15 @@ class ProductService
                 $path = $image->storePublicly('images');
                 $product->images()->create([
                     'url' => config('app.url') . Storage::url($path),
+                ]);
+            }
+        }
+
+        if (!empty($categories)) {
+            $product->categories()->detach();
+            foreach ($categories as $category) {
+                $product->categories()->firstOrCreate([
+                    'name' => $category
                 ]);
             }
         }
