@@ -18,7 +18,7 @@ class ProductService
         $images = Arr::get($this->data, 'images');
         unset($this->data['images']);
 
-        $this->data['article'] = Str::random(10);
+        $this->data['article'] = Str::random(8);
         $product = $user->products()->create($this->data);
 
         // todo S3 storage

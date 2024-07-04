@@ -20,6 +20,7 @@ class ProductFactory extends Factory
         return [
             'name' => $this->faker->sentence,
             'status' => $this->faker->randomElement(['available', 'unavailable']),
+            'article' => $this->faker->unique()->randomNumber(8),
             'data' => $this->faker->randomElement([json_encode(['price' => $this->faker->randomFloat(2, 1, 1000)]), null]),
             'user_id' => User::get()->random()->id,
         ];
