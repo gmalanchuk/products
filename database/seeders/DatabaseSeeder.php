@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\CategoryProduct;
 use App\Models\ProductImage;
+use App\Models\Review;
 use App\Models\User;
 
 use Database\Factories\ProductImageFactory;
@@ -23,5 +24,6 @@ class DatabaseSeeder extends Seeder
         Product::factory(50)->create();
         ProductImage::factory(110)->create();
         CategoryProduct::factory(100)->create();
+        Review::factory(300)->create();
     }
 }

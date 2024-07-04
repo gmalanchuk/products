@@ -2,13 +2,14 @@
 
 namespace Database\Factories;
 
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Review>
  */
-class ProductFactory extends Factory
+class ReviewFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,10 +19,10 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->sentence,
-            'status' => $this->faker->randomElement(['available', 'unavailable']),
-            'article' => $this->faker->unique()->randomNumber(8),
+            'product_id' => Product::get()->random()->id,
             'user_id' => User::get()->random()->id,
+            'comment' => $this->faker->sentence,
+            'rating' => $this->faker->numberBetween(1, 5),
         ];
     }
 }

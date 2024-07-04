@@ -14,11 +14,10 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('article', 10)->unique();
             $table->string('name', 255);
             $table->enum('status', ['available', 'unavailable'])->default('unavailable');
-            $table->jsonb('data')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('article', 10)->unique();
             $table->timestamps();
             $table->softDeletes();
         });

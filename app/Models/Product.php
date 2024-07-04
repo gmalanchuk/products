@@ -20,7 +20,7 @@ class Product extends Model
         'article',
         'name',
         'status',
-        'data',
+        'rating'
     ];
 
     public static function scopeAvailable($query)
@@ -51,5 +51,10 @@ class Product extends Model
     public function categoriesList(): array
     {
         return $this->categories->pluck('name')->toArray();
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
     }
 }
