@@ -5,5 +5,5 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::group(['prefix' => 'admin'], function () {
-    Route::post('change/role/{user}', [AdminController::class, 'changeRole']);
+    Route::put('change/role/{user}', [AdminController::class, 'changeRole'])->middleware('auth:sanctum');
 });
