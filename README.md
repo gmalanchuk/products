@@ -15,19 +15,9 @@ To run the project, follow these steps:
     php artisan key:generate
     ```
 
-4. You can run the database in docker using the command:
+4. You can run the project using docker-compose:
     ```bash
     docker-compose up
-    ```
-
-5. Wait for the database to start and run migrations in a new terminal tab:
-    ```bash
-    php artisan migrate
-    ```
-
-6. Start the server:
-    ```bash
-    php artisan serve
     ```
 
 Documentation is available at: http://127.0.0.1:8000/api/documentation <br>

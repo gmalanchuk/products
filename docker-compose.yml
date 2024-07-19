@@ -1,4 +1,16 @@
 services:
+    app:
+        build: .
+        command: >
+            bash -c "php artisan migrate
+            && php artisan octane:frankenphp --workers=1 --max-requests=1"
+        ports:
+            - "8000:8000"
+        volumes:
+            - .:/app
+        depends_on:
+            - mysql
+
     mysql:
         image: mysql:8.3
         restart: always
