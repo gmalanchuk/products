@@ -6,10 +6,19 @@ use App\Http\Requests\Admin\ChangeRoleRequest;
 use App\Http\Resources\Admin\ChangeRoleResource;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
 
-class AdminController extends Controller
+class AdminController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('auth:sanctum', only: ['changeRole']),
+        ];
+    }
+
     public function changeRole(User $user, ChangeRoleRequest $request): ChangeRoleResource
     {
         $currentUser = auth()->user();

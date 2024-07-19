@@ -40,7 +40,7 @@ class ProductController extends Controller implements HasMiddleware
     public function index(): AnonymousResourceCollection
     {
         $products = Product::scopeAvailable(Product::all());  // Get all available products
-        return ProductResource::collection($products);  // Return collection of products
+        return ProductResource::collection($products);
     }
 
     /**
@@ -53,7 +53,7 @@ class ProductController extends Controller implements HasMiddleware
     public function store(StoreProductRequest $request): ProductResource
     {
         $product = ProductFacade::setData($request->validated())->createProduct();  // Creating a new product in the ProductService class
-        return new ProductResource($product);  // Return the created product
+        return new ProductResource($product);
     }
 
     /**
@@ -65,9 +65,8 @@ class ProductController extends Controller implements HasMiddleware
      */
     public function show(Product $product): ProductResource
     {
-//        dd($product->status);
         Gate::authorize('view', $product);  // Check if the user can view the product (only the owner or admin can view the unavailable product)
-        return new ProductResource($product);  // Return the product
+        return new ProductResource($product);
     }
 
     /**
@@ -81,7 +80,7 @@ class ProductController extends Controller implements HasMiddleware
     {
         Gate::authorize('update', $product);  // Check if the user can update the product (only the owner or admin can update the product)
         $product = ProductFacade::setData($request->validated())->updateProduct($product);  // Updating the product in the ProductService class
-        return new ProductResource($product);  // Return the updated product
+        return new ProductResource($product);
     }
 
     /**

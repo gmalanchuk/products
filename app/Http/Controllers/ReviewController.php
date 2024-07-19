@@ -39,11 +39,11 @@ class ReviewController extends Controller implements HasMiddleware
 
     public function update(Request $request, string $id)
     {
-        // todo только овнер или админ
+        // todo only owner or admin
     }
 
     public function destroy(string $id)
     {
-        // todo только овнер или админ
+        // todo only owner or admin
     }
 }
