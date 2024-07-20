@@ -7,9 +7,10 @@ services:
         ports:
             - "8000:8000"
         volumes:
-            - .:/app
+            - ./:/app
         depends_on:
             - mysql
+            - rabbitmq
 
     mysql:
         image: mysql:8.3

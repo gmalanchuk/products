@@ -6,6 +6,7 @@ use App\Exceptions\InvalidDetailsException;
 use App\Exceptions\InvalidLoginException;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthService
 {
@@ -16,12 +17,9 @@ class AuthService
      */
     public function register(): User | string
     {
-        $user = new User([
-            'name' => $this->data['name'],
-            'email' => $this->data['email'],
-            'password' => bcrypt($this->data['password']),
-        ]);
+        $this->data['password'] = Hash::make($this->data['password']); // Hash the password
 
+        $user = new User($this->data);
         if (!$user->save()) {
             throw new InvalidDetailsException();
         }
@@ -37,11 +35,11 @@ class AuthService
      */
     public function login(): User | string
     {
-        if (!Auth::guard('web')->attempt($this->data)) {
+        if (!Auth::attempt($this->data)) { // If the credentials are invalid throw an InvalidLoginException exception
             throw new InvalidLoginException();
         }
 
-        $user = Auth::user();
+        $user = auth()->user();
         $tokenResult = $user->createToken('Personal Access Token');
         $user->token = $tokenResult->plainTextToken;
 

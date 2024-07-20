@@ -9,7 +9,6 @@ use App\Facades\AuthFacade;
 use App\Http\Requests\Auth\LoginAuthRequest;
 use App\Http\Requests\Auth\RegisterAuthRequest;
 use App\Http\Resources\Auth\TokenResource;
-use App\Http\Resources\Auth\UserResource;
 use App\Jobs\UserEmailVerificationJob;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -33,15 +32,13 @@ class AuthController extends Controller implements HasMiddleware
      * )
      * @throws InvalidDetailsException
      */
-    public function register(RegisterAuthRequest $request): UserResource
+    public function register(RegisterAuthRequest $request): TokenResource
     {
         $user = AuthFacade::setData($request->validated())->register();
 
         UserEmailVerificationJob::dispatch($user); // send email verification link
 
-        return (new UserResource($user))->additional([
-            'token' => new TokenResource($user),
-        ]);
+        return new TokenResource($user->token);
     }
 
     /**
@@ -52,12 +49,10 @@ class AuthController extends Controller implements HasMiddleware
      * )
      * @throws InvalidLoginException
      */
-    public function login(LoginAuthRequest $request): UserResource
+    public function login(LoginAuthRequest $request): TokenResource
     {
         $user = AuthFacade::setData($request->validated())->login();
-        return (new UserResource($user))->additional([
-            'token' => new TokenResource($user),
-        ]);
+        return new TokenResource($user->token);
     }
 
     /**

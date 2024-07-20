@@ -10,5 +10,3 @@ RUN install-php-extensions \
     pdo_mysql
 
 COPY . .
-#
-#ENTRYPOINT ["php", "artisan", "octane:frankenphp"]

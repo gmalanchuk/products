@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Http\Resources\Auth\TokenResource;
-use App\Http\Resources\Auth\UserResource;
 use App\Http\Resources\Product\ProductResource;
 use App\Services\AuthService;
 use App\Services\EmailService;
@@ -28,7 +27,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         ProductResource::withoutWrapping();
-        UserResource::withoutWrapping();
         TokenResource::withoutWrapping();
     }
 }

@@ -28,6 +28,8 @@ class ReviewController extends Controller implements HasMiddleware
     public function store(StoreReviewRequest $request)
     {
         $user = auth()->user();
+        // TODO вынести мб $request->validated() в отдельную переменную
+        dd($request->validated());
         $review = $user->reviews()->create($request->validated());
         return new ReviewResource($review);
     }
