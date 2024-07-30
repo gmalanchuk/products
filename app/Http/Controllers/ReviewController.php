@@ -44,8 +44,7 @@ class ReviewController extends Controller implements HasMiddleware
 
     public function update(UpdateReviewRequest $request, Review $review): ReviewResource
     {
-        // todo только владелец отзыва может редактировать его (админ не может). итог: переписать политику
-        Gate::authorize('update', $review);  // only the owner or admin can update the review
+        Gate::authorize('update', $review);  // only owner can update the review
         $data = $request->validated();
         $review->update($data);
         return new ReviewResource($review);
