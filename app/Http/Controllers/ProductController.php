@@ -13,6 +13,7 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Gate;
 
+
 /**
  * @OA\Info(
  *      version="1.0.0",
@@ -90,9 +91,8 @@ class ProductController extends Controller implements HasMiddleware
      *     @OA\Response(response="204", description="No content")
      * )
      */
-    public function destroy(string $id): Response
+    public function destroy(Product $product): Response
     {
-        $product = Product::findOrFail($id);
         Gate::authorize('delete', $product);  // Check if the user can delete the product (only the owner or admin can delete the product)
         $product->delete();  // Soft delete the product
         return response()->noContent();

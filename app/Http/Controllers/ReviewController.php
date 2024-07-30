@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Review\StoreReviewRequest;
+use App\Http\Requests\Review\UpdateReviewRequest;
 use App\Http\Resources\Review\ReviewResource;
 use App\Models\Review;
-use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Gate;
+
 
 class ReviewController extends Controller implements HasMiddleware
 {
@@ -19,33 +23,37 @@ class ReviewController extends Controller implements HasMiddleware
         ];
     }
 
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
         $reviews = Review::all();
         return ReviewResource::collection($reviews);
     }
 
-    public function store(StoreReviewRequest $request)
+    public function store(StoreReviewRequest $request): ReviewResource
     {
         $user = auth()->user();
-        // TODO вынести мб $request->validated() в отдельную переменную
-        dd($request->validated());
-        $review = $user->reviews()->create($request->validated());
+        $data = $request->validated();
+        $review = $user->reviews()->create($data);
         return new ReviewResource($review);
     }
 
-    public function show(Review $review)
+    public function show(Review $review): ReviewResource
     {
         return new ReviewResource($review);
     }
 
-    public function update(Request $request, string $id)
+    public function update(UpdateReviewRequest $request, Review $review): ReviewResource
     {
-        // todo only owner or admin
+        Gate::authorize('update', $review);  // only the owner or admin can update the review
+        $data = $request->validated();
+        $review->update($data);
+        return new ReviewResource($review);
     }
 
-    public function destroy(string $id)
+    public function destroy(Review $review): Response
     {
-        // todo only owner or admin
+        Gate::authorize('delete', $review);  // only the owner or admin can delete the review
+        $review->delete();  // Soft delete the review
+        return response()->noContent();
     }
 }
