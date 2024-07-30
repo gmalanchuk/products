@@ -23,6 +23,7 @@ class AdminController extends Controller implements HasMiddleware
     {
         $currentUser = auth()->user();
 
+        // todo сделать политику. или вынести всю логику в сервис
         if ($currentUser->role !== 'admin') {
             throw new AuthorizationException('You do not have admin rights to perform this action'); // todo middleware
         } elseif ($user->role === 'admin' && $user->changed_by === null) {
