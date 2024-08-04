@@ -4,9 +4,11 @@ namespace App\Providers;
 
 use App\Http\Resources\Auth\TokenResource;
 use App\Http\Resources\Product\ProductResource;
+use App\Policies\AdminPolicy;
 use App\Services\AuthService;
 use App\Services\EmailService;
 use App\Services\ProductService;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -28,5 +30,8 @@ class AppServiceProvider extends ServiceProvider
     {
         ProductResource::withoutWrapping();
         TokenResource::withoutWrapping();
+
+        // Policies
+        Gate::define('changeRole', [AdminPolicy::class, 'changeRole']);
     }
 }
